@@ -1,0 +1,27 @@
+.dist1, .dist2, .dist3 {
+float:left;
+clear:both;
+width:100%;
+height:240px;
+overflow:hidden;
+position:relative;
+}
+
+.dist1 .inside, .dist2 .inside, .dist3 .inside {
+position:absolute;
+top:50%;
+left:0;
+height:200px;
+margin-top:-50px;
+}
+
+.dist1 a, .dist2 a, .dist3 a {
+display:block;
+position:absolute;
+width:100px;
+height:100px;
+overflow:hidden;
+-moz-border-radius:100px;
+-webkit-border-radius:100px;
+border-radius: 100px;
+}
