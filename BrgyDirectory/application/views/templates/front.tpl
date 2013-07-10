@@ -85,18 +85,12 @@
             }
 
             img.logo{
-                max-height: 100px;
-                max-width: 100px;
                 display:block;
                 margin:0 auto;
             }
 
             table.logos tbody tr td, table.logos thead tr th{
                 border-color: black;
-            }
-
-            table.logos tbody tr td{
-                height: 175px;
             }
 
             p.logo-caption{
@@ -109,21 +103,22 @@
             .bx-wrapper .bx-controls-direction a {
                 margin-top: -1px;         
             }
-            
+
             .bx-wrapper .bx-viewport{
                 background-color: transparent;
                 border-color: transparent;
                 box-shadow: 0pt 0pt 0px rgb(255,255,255);
             }
-            
+
             #squarecontent{
                 background-color: white;
             }
-            
+
             #puzzle_div{
                 cursor: pointer;
             }
         </style>
+        <link rel="stylesheet" href="{$base_url}application/views/css/dcbd-responsive.css" media="screen">
     </head>
     <body>
         <nav class="art-nav">
@@ -148,9 +143,11 @@
                 <div class="span12">
                     <!--<img id="ice_header" style="border-radius: 8px;" src="{$base_url}application/views/img/puzzle-page.png" />-->
 
-                    <div id="puzzle_div" >
+                    <img class="hidden-desktop" src="{$base_url}application/views/img/puzzle-page.png" />
+                    
+                    <div id="puzzle_div" class="visible-desktop">
                         <div style="text-align: center; ">
-                            <img id="game" src="{$base_url}application/views/img/puzzle-page.png" height="340" style="max-width: 1170px;" />
+                            <img id="game" src="{$base_url}application/views/img/puzzle-page.png" <!--height="340" style="max-width: 1170px;"--> />
                         </div>
                     </div>
                 </div>
@@ -169,7 +166,7 @@
                         <!-- <button id="retry_puzzle" class="art-button">Play Again</button>-->
                         <button id="help_puzzle" class="art-button">Help</button>
                         <span id="level_puzzle" style="color: black; font-size: larger; font-weight: bold;">| Level: <span id="level_value_puzzle"></span></span>
-                        
+
                     </p>
                 </div>
 
@@ -315,8 +312,8 @@
             var base_url = '{$base_url}';
 
             $(document).ready(function() {
-            $('.bxslider').bxSlider();
-        });
+                $('.bxslider').bxSlider();
+            });
 
         </script>
     </body>

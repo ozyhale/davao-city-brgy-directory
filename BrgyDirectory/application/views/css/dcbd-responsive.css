@@ -1,0 +1,94 @@
+/* 
+    Document   : dcbd-responsive
+    Created on : Jul 10, 2013, 9:58:13 PM
+    Author     : Ozy Admin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+/* Large desktop */
+@media (min-width: 1200px) {
+
+    img.logo{
+        max-height: 100px;
+        max-width: 100px;
+    }
+
+    table.logos tbody tr td{
+        height: 175px;
+    }
+    
+    #game{
+        height: 340px;
+        width: 1170px;
+    }
+}
+
+@media (min-width: 980px) and (max-width: 1199px) {
+    img.logo{
+        max-height: 75px;
+        max-width: 75px;
+    }
+
+    table.logos tbody tr td{
+        height: 150px;
+    }
+    
+    #game{
+        height: 300px;
+        width: 940px;
+    }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    img.logo{
+        max-height: 50px;
+        max-width: 50px;
+    }
+
+    table.logos tbody tr td{
+        height: 125px;
+    }
+    
+    #game{
+        height: 250px;
+        width: 724px;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+    img.logo{
+        max-height: 150px;
+        max-width: 150px;
+    }
+
+    table.logos tbody tr td{
+        height: 225px;
+    }
+}
+
+@media (max-width: 550px) {
+
+    img.logo{
+        max-height: 100px;
+        max-width: 100px;
+    }
+
+    table.logos tbody tr td{
+        height: 175px;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    img.logo{
+        max-height: 75px;
+        max-width: 75px;
+    }
+
+    table.logos tbody tr td{
+        height: 150px;
+    }
+}
