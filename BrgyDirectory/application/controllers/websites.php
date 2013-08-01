@@ -16,13 +16,10 @@ class Websites extends CI_Controller {
         parent::__construct();
 
         $this->load->model('website_model', '', TRUE);
-//        $this->load->model('category_model', '', TRUE);
+
         $this->load->helper('inflector');
         $this->load->library('session');
 
-//        $categories = $this->category_model->get_all_data();
-//
-//        $this->template_engine->assign('categories', $categories->result_array());
         $this->template_engine->assign('title', get_class($this) . ' - ' . $this->config->item('site_name'));
     }
 
@@ -50,14 +47,6 @@ class Websites extends CI_Controller {
     private function _extract_rename_zip($zipfile, $name) {
         //opening the uploaded zip
         $zip = zip_open($zipfile);
-
-//        $foldername = rtrim(zip_entry_name(zip_read($zip)), '/');
-        //Check if the zip file and the folder inside it matches
-//        if ($foldername != $name) {
-//            zip_close($zip);
-//            $this->_upload_error("Invalid zip: Zip file must matched the folder inside it.");
-//            return;
-//        }
 
         $valid = true;
 
@@ -90,19 +79,6 @@ class Websites extends CI_Controller {
         $zip_archive = new ZipArchive();
         $zip_archive->open($zipfile);
 
-//        $directory = "";
-//
-//        if ($this->session->userdata('account_type') == "Super Admin") {
-//
-//            $query = $this->category_model->get_data_by_id($this->input->post('category'));
-//
-//            $row = $query->row_array();
-//
-//            $directory = $row['directory'];
-//        } else {
-//            $directory = $this->session->userdata('category_dir');
-//        }
-
         if (!$zip_archive->extractTo('./')) {
             $zip_archive->close();
             $this->_upload_error("Error in extracting the zip!");
@@ -130,9 +106,6 @@ class Websites extends CI_Controller {
         $this->form_validation->set_rules('district', 'District', 'required|xss_clean');
         $this->form_validation->set_rules('database', 'Database', 'required|xss_clean|is_unique[websites.database]');
 
-//        if ($this->session->userdata('account_type') == "Super Admin") {
-//            $this->form_validation->set_rules('category', 'Category', 'required|xss_clean');
-//        }
         //validate forms
         if (!$this->form_validation->run()) {
             $this->_upload_error(validation_errors());
@@ -176,18 +149,6 @@ class Websites extends CI_Controller {
             return;
         }
 
-        //check if the zip's file name for spaces in its filename
-//        if (preg_match("/\s/", $_FILES['web_files']['name']) != 0) {
-//            $this->_upload_error("Invalid zip: only alphabetical characters, numerical characters, underscore(_) or dash(-) on its filename is accepted!");
-//            return;
-//        }
-//        $name = str_replace(".zip", "", $_FILES['web_files']['name']);
-        //check if name exists in the database
-//        if ($this->website_model->is_name_exists($name)) {
-//            $this->_upload_error("Website exists!");
-//            return;
-//        }
-
         $params['file'] = $_FILES['web_files'];
         $this->load->library('upload_class', $params);
 
@@ -210,76 +171,56 @@ class Websites extends CI_Controller {
             return;
         }
 
-        $this->_extract_rename_zip('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip', $name);
+//        $this->_extract_rename_zip('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip', $name);
+        
+        //opening the uploaded zip
+        $zip = zip_open('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip');
 
-//        //opening the uploaded zip
-//        $zip = zip_open('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip');
-//
-////        $foldername = rtrim(zip_entry_name(zip_read($zip)), '/');
-//        //Check if the zip file and the folder inside it matches
-////        if ($foldername != $name) {
-////            zip_close($zip);
-////            $this->_upload_error("Invalid zip: Zip file must matched the folder inside it.");
-////            return;
-////        }
-//
-//        $valid = true;
-//
-//        $first_resource = zip_read($zip);
-//
-//        $folder = rtrim(zip_entry_name($first_resource), "/");
-//
-//        //check directory inside zip if has space in it
-//        if (preg_match("/\s/", $folder)) {
-//            $this->_upload_error("The top level folder inside the zip contains spaces. Rename the folder inside and continue uploading.");
-//            return;
-//        }
-//
-//        //check the zip contents if valid
-//        while ($id = zip_read($zip)) {
-//
-//            if (!preg_match("/^$folder/", zip_entry_name($id))) {
-//                zip_close($zip);
-//                $valid = false;
-//                break;
-//            }
-//        }
-//
-//        if (!$valid) {
-//            $this->_upload_error("Invalid zip: Zip file must have only 1 folder (no other folders/files), and the folder must have the webfiles inside it.");
-//            return;
-//        }
-//
-//        //extract the files in zip
-//        $zip_archive = new ZipArchive();
-//        $zip_archive->open('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip');
-//
-////        $directory = "";
-////
-////        if ($this->session->userdata('account_type') == "Super Admin") {
-////
-////            $query = $this->category_model->get_data_by_id($this->input->post('category'));
-////
-////            $row = $query->row_array();
-////
-////            $directory = $row['directory'];
-////        } else {
-////            $directory = $this->session->userdata('category_dir');
-////        }
-//
-//        if (!$zip_archive->extractTo('./')) {
-//            $zip_archive->close();
-//            $this->_upload_error("Error in extracting the zip!");
-//            return;
-//        }
-//
-//        //rename directory according to site_name
-//        if (!$this->_rename_brgy_dir($folder, url_title($name))) {
-//            $this->_update_error($id, "Error in renaming name!");
-//            return;
-//        }
-//
-//        $zip_archive->close();
+        $valid = true;
+
+        $first_resource = zip_read($zip);
+
+        $folder = rtrim(zip_entry_name($first_resource), "/");
+
+        //check directory inside zip if has space in it
+        if (preg_match("/\s/", $folder)) {
+            $this->_upload_error("The top level folder inside the zip contains spaces. Rename the folder inside and continue uploading.");
+            return;
+        }
+
+        //check the zip contents if valid
+        while ($id = zip_read($zip)) {
+
+            if (!preg_match("/^$folder/", zip_entry_name($id))) {
+                zip_close($zip);
+                $valid = false;
+                break;
+            }
+        }
+
+        if (!$valid) {
+            $this->_upload_error("Invalid zip: Zip file must have only 1 folder (no other folders/files), and the folder must have the webfiles inside it.");
+            return;
+        }
+
+        //extract the files in zip
+        $zip_archive = new ZipArchive();
+        $zip_archive->open('application/tmp/' . $this->upload_class->file_dst_name_body . '.zip');
+
+        if (!$zip_archive->extractTo('./')) {
+            $zip_archive->close();
+            $this->_upload_error("Error in extracting the zip!");
+            return;
+        }
+
+        //rename directory according to site_name
+        if (!$this->_rename_brgy_dir($folder, url_title($name))) {
+            $this->_update_error($id, "Error in renaming name!");
+            return;
+        }
+
+        $zip_archive->close();
+
         //upload logo
         $params_logos['file'] = $_FILES['logo'];
         $this->load->library('upload_class', $params_logos, 'upload_logo');
@@ -346,30 +287,6 @@ class Websites extends CI_Controller {
             return;
         }
 
-//        $this->website_model->name = $name;
-//        $this->website_model->district = $this->input->post('district');
-//        $this->website_model->description = $this->input->post('description');
-//        $this->website_model->logo = "application/views/logos/" . $this->name . '.png';
-//        $this->website_model->database = $this->input->post('database');
-//        $this->website_model->url = $this->name;
-//        $this->website_model->date_registered = mdate('%Y-%m-%d', time()); //a.k.a. last_activated
-//        $this->website_model->status = 'active';
-//        $this->website_model->uploaded_by = $this->session->userdata('id');
-        //            if ($this->session->userdata('account_type') == 'Super Admin') {
-//                $this->category = $this->input->post('category');
-//
-//                $id = $this->input->post('category');
-//
-//                $query = $this->db->get_where('category', array('id' => $id));
-//
-//                $row = $query->row();
-//
-//                $this->url = $row->directory . "/" . $this->name;
-//            } else {
-//                $this->category = $this->session->userdata('assigned_to');
-//                $this->url = $this->session->userdata('category_dir') . "/" . $this->name;
-//            }
-
         $data['name'] = $name;
         $data['district'] = $this->input->post('district');
         $data['description'] = $this->input->post('description');
@@ -380,11 +297,6 @@ class Websites extends CI_Controller {
         $data['uploaded_by'] = $this->session->userdata('id');
 
         $this->website_model->add_website($data);
-
-//        if (!$this->website_model->add_website()) {
-//            $this->_upload_error("Database error!");
-//            return;
-//        }
 
         redirect("websites/uploaded");
     }
