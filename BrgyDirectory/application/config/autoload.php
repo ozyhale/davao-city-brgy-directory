@@ -52,8 +52,8 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('global_codes', 'template_engine');
-
+//$autoload['libraries'] = array('global_codes', 'template_engine');
+$autoload['libraries'] = array('template_engine');
 
 /*
 | -------------------------------------------------------------------

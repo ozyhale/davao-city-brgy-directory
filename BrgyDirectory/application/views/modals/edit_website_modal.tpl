@@ -61,7 +61,7 @@
                 <label class="control-label">Logo: </label>
                 <div class="controls">
                     <input type="file" name="logo" />
-                    <span class="help-block">Recommended logo's dimensions: 150x150</span>
+                    <span class="help-block">Recommended logo's dimensions: 200x200</span>
                 </div>
             </div>
 

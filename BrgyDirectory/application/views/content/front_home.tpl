@@ -191,7 +191,7 @@
 
                                                     {if $smarty.foreach.d2.last}
                                                         
-                                                        {if $k < 2}
+                                                        {if not $k < 2}
                                                             <td>&nbsp;</td>
                                                             <td>&nbsp;</td>
                                                             </tr>
