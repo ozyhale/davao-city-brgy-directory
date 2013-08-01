@@ -147,7 +147,7 @@
                     
                     <div id="puzzle_div" class="visible-desktop">
                         <div style="text-align: center; ">
-                            <img id="game" src="{$base_url}application/views/img/puzzle-page.png" <!--height="340" style="max-width: 1170px;"--> />
+                            <img id="game" src="{$base_url}application/views/img/puzzle-page.png" />
                         </div>
                     </div>
                 </div>
