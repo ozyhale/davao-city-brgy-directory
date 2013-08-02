@@ -47,7 +47,7 @@ class Website_model extends CI_Model {
 
         return $names;
     }
-    
+
     public function get_URLs() {
 
         $query = $this->db->query("SELECT url FROM websites");
@@ -72,9 +72,24 @@ class Website_model extends CI_Model {
         }
 
         $this->db->join('users', 'websites.uploaded_by = users.id');
-//        $this->db->join('category', 'websites.category = category.id');
 
         $query = $this->db->get('websites');
+
+        return $query;
+    }
+
+    public function get_mysites($fields = '', $where = '') {
+        if ($fields != '') {
+            $this->db->select($fields);
+        }
+
+        $this->db->join('users', 'websites.uploaded_by = users.id');
+
+        if ($where != '') {
+            $query = $this->db->get_where('websites', $where);
+        } else {
+            $query = $this->db->get('websites');
+        }
 
         return $query;
     }
@@ -168,7 +183,6 @@ class Website_model extends CI_Model {
 //        $this->district = $this->input->post('district');
 //        $this->description = $this->input->post('description');
 //        $this->url = $this->name;
-
 //        if ($this->session->userdata('account_type') == 'Super Admin') {
 //            
 //            $id2 = $this->input->post('category');
@@ -181,7 +195,6 @@ class Website_model extends CI_Model {
 //        } else {
 //            $this->url = $this->session->userdata('category_dir') . "/" . $this->name;
 //        }
-
 //        if($this->session->userdata('account_type') == "Super Admin"){
 //            $this->category = $this->input->post('category');
 //        }
