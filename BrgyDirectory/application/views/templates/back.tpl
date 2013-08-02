@@ -120,18 +120,24 @@
                                             <li {if $active_menu_item == "Home"}class="active"{/if}>
                                                 <a href="{$site_url}administrator">Home</a>
                                             </li>
+                                            {*
                                             <li class="dropdown {if $active_menu_item == "Websites"}active{/if}">
-                                                <a href="{$site_url}websites">Websites</a>
+                                            <a href="{$site_url}websites">Websites</a>
                                             </li>
+                                            *}
+
+                                            <li class="dropdown {if $active_menu_item == "Websites"}active{/if}">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Websites <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="{$site_url}websites/mysites">My Websites</a></li>
+                                                    <li><a href="{$site_url}websites">List of Websites</a></li>
+                                                </ul>
+                                            </li>
+
                                             {if isset($account_type) && $account_type == "Super Admin"}
                                                 <li {if $active_menu_item == "Users"}class="active"{/if}>
                                                     <a href="{$site_url}users">Users</a>
                                                 </li>
-                                                <!--
-                                                <li {if $active_menu_item == "Categories"}class="active"{/if}>
-                                                    <a href="{$site_url}categories">Categories</a>
-                                                </li>
-                                                -->
                                             {/if}
                                         </ul>
                                         <ul class="nav pull-right">
@@ -156,12 +162,12 @@
                             <ul class="nav nav-list">
                                 <li class="nav-header"><i class="icon-globe icon-white"></i>&nbsp;Shortcuts</li>
                                 <hr style="margin-top: -1px; margin-bottom: 5px;"/>
+                                <li><a href="{$site_url}websites/mysites">My Websites</a></li>
                                 <li><a href="#upload_website" data-toggle="modal">Upload Website</a></li>
 
                                 {if isset($account_type) && $account_type == "Super Admin"}
                                     <li><a href="{$site_url}websites/discover_sites">Discover Sites</a></li>
                                     <li><a href="#add_user" data-toggle="modal">Add User Admin</a></li>
-                                    <!-- <li><a href="#add_category" data-toggle="modal">Add Category</a></li>-->
                                 {/if}
 
                                 <li><a href="{$base_url}" target="_blank">View Homepage</a></li>
@@ -224,9 +230,9 @@
         {if isset($add_category_alert)}
             {literal}
                 <script type="text/javascript">
-            $(document).ready(function() {
-                $('#add_category').modal('show');
-            });
+                    $(document).ready(function() {
+                        $('#add_category').modal('show');
+                    });
                 </script>
             {/literal}
         {/if}
@@ -274,7 +280,7 @@
 
         <script type="text/javascript">
             {if $alert != ''}
-                $(document).ready(function() {
+            $(document).ready(function() {
                 bootbox.alert("{$alert}");
             });
             {/if}

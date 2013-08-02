@@ -1,7 +1,13 @@
 <div class="navbar">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand">List of Websites</a>
+
+            {if isset($mysites)}
+                <a class="brand">My Websites</a>
+            {else}
+                <a class="brand">List of Websites</a>
+            {/if}
+
             <ul class="nav pull-right">
                 <li>
                     <a href="#upload_website" data-toggle="modal">Upload Website</a>
