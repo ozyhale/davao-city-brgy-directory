@@ -49,8 +49,17 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'brgy_cpanel';
-$db['default']['password'] = 'brgy_cpanel';
+
+//local server
+
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
+
+//usep server
+
+//$db['default']['username'] = 'brgy_cpanel';
+//$db['default']['password'] = 'brgy_cpanel';
+
 $db['default']['database'] = 'dbbrgy_cpanel';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

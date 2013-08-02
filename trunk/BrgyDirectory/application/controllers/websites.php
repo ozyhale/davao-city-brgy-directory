@@ -42,6 +42,25 @@ class Websites extends CI_Controller {
         $this->template_engine->assign('brgys', $query->result_array());
         $this->template_engine->assign('content', 'back_websites.tpl');
     }
+    
+    public function mysites(){
+        
+        $this->load->library('table');
+        $this->load->helper('date');
+
+        $where['users.id'] = $this->session->userdata('id');
+        
+        $query = $this->website_model->get_mysites('websites.id, websites.name, websites.district, websites.description, websites.logo, websites.url, websites.date_registered, websites.status, users.username AS uploaded_by', $where);
+        
+        foreach ($query->result_array() as $value) {
+            if ((strtotime($value['date_registered']) + 31536000) <= now()) {
+                $this->website_model->deactivate($value['id']);
+            }
+        }
+
+        $this->template_engine->assign('brgys', $query->result_array());
+        $this->template_engine->assign('content', 'back_websites.tpl');
+    }
 
     private function _rename_brgy_dir($old_dir, $new_dir) {
         return rename($old_dir . '/', $new_dir . '/');
