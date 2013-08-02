@@ -16,13 +16,9 @@ class Websites extends CI_Controller {
         parent::__construct();
 
         $this->load->model('website_model', '', TRUE);
-//        $this->load->model('category_model', '', TRUE);
         $this->load->helper('inflector');
         $this->load->library('session');
 
-//        $categories = $this->category_model->get_all_data();
-//
-//        $this->template_engine->assign('categories', $categories->result_array());
         $this->template_engine->assign('title', get_class($this) . ' - ' . $this->config->item('site_name'));
     }
 
@@ -58,62 +54,13 @@ class Websites extends CI_Controller {
             }
         }
 
+        $this->template_engine->assign('mysites', 'yes');
         $this->template_engine->assign('brgys', $query->result_array());
         $this->template_engine->assign('content', 'back_websites.tpl');
     }
 
     private function _rename_brgy_dir($old_dir, $new_dir) {
         return rename($old_dir . '/', $new_dir . '/');
-    }
-
-    private function _extract_rename_zip($zipfile, $name) {
-        //opening the uploaded zip
-        $zip = zip_open($zipfile);
-
-        $valid = true;
-
-        $first_resource = zip_read($zip);
-
-        $folder = rtrim(zip_entry_name($first_resource), "/");
-
-        //check directory inside zip if has space in it
-        if (preg_match("/\s/", $folder)) {
-            $this->_upload_error("The top level folder inside the zip contains spaces. Rename the folder inside and continue uploading.");
-            return;
-        }
-
-        //check the zip contents if valid
-        while ($id = zip_read($zip)) {
-
-            if (!preg_match("/^$folder/", zip_entry_name($id))) {
-                zip_close($zip);
-                $valid = false;
-                break;
-            }
-        }
-
-        if (!$valid) {
-            $this->_upload_error("Invalid zip: Zip file must have only 1 folder (no other folders/files), and the folder must have the webfiles inside it.");
-            return;
-        }
-
-        //extract the files in zip
-        $zip_archive = new ZipArchive();
-        $zip_archive->open($zipfile);
-
-        if (!$zip_archive->extractTo('./')) {
-            $zip_archive->close();
-            $this->_upload_error("Error in extracting the zip!");
-            return;
-        }
-
-        //rename directory according to site_name
-        if (!$this->_rename_brgy_dir($folder, url_title($name))) {
-            $this->_update_error($id, "Error in renaming name!");
-            return;
-        }
-
-        $zip_archive->close();
     }
 
     public function upload() {
